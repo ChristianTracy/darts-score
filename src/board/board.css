@@ -1,0 +1,19 @@
+.board{
+  display: flex;
+  flex-direction: column;
+}
+
+.board .body,
+.board .totals{
+  display: flex;
+  justify-content: space-around;
+}
+
+.board .body{
+  margin-top: 100px
+}
+
+.board button{
+  width: 100px;
+  align-self: center;
+}

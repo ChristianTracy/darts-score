@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Turn from './Turn';
+import './player.css';
 
 class Player extends Component {
 
@@ -21,17 +22,16 @@ class Player extends Component {
       turns = [
         <Turn key={0} darts={this.props.turns} throwDart={this.props.throwDart}/>
       ];
-    } 
+    }
     else{
       turns = this.props.turns.map((turn, idx) => {
         return <Turn key={idx} darts={turn} throwDart={this.props.throwDart}/>;
       });
     }
 
-    return <div>
-      {this.props.name}
-      {this.props.isPlaying.toString()}
-      {turns}
+    return <div className="player">
+      <header>{this.props.name}</header>
+      <div>{turns}</div>
     </div>
 
   }
