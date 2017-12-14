@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Player from '../player/Player';
 import Score from './Score';
-import { log } from 'util';
 
 class Board extends React.Component {
 
   constructor(props){
     super(props);
     this.state = {
-      currentPlayer: 0
+      currentPlayer: 0,
+      round: 0
     };
+
+    this.isPlaying = this.isPlaying.bind(this);
   }
 
   componentWillMount(){
@@ -18,6 +20,7 @@ class Board extends React.Component {
       let players = this.props.players.map((playerName) => {
         return {
           name: playerName,
+          turns: []
         };
       }); 
   
@@ -27,12 +30,33 @@ class Board extends React.Component {
     }
   }
 
+  isPlaying(idx){
+    return idx === this.state.currentPlayer;
+  }
+
+
+  throwDart = (score) => {
+    let currentPlayer = this.state.players[this.state.currentPlayer];
+    let currentTurn = currentPlayer.turns[currentPlayer.turns.length - 1];
+    console.log(currentTurn);
+
+    if(currentTurn === undefined){
+      currentPlayer.turns.push([score])
+    }else if(currentTurn.length < 3){
+      currentTurn.push(score)
+    }
+
+  }
 
   render(){
     let players;
     if (this.props.players) {
-      players = this.props.players.map((player, idx) => {
-        return <Player key={idx} name={player} isPlaying={idx === this.state.currentPlayer} />
+      players = this.state.players.map((player, idx) => {
+        return <Player key={idx} 
+          name={player.name} 
+          turns={player.turns} 
+          isPlaying={this.isPlaying(idx)}
+          throwDart={this.throwDart} />
       })
     }
     return <div>
