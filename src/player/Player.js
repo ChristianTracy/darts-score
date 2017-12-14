@@ -8,23 +8,28 @@ class Player extends Component {
     super(props);
     this.state = {
       won: false,
-      playing: false
+      playing: false,
+      turns: this.props.turns
     }
   }
 
   componentWillReceiveProps(newProps){
-    this.forceUpdate()
+    if (newProps != this.props) {
+      this.setState({
+        turns:newProps.turns
+      })
+    }
   }
 
   render(){
     let turns;
-    if(this.props.turns.length === 0){
+    if(this.state.turns.length === 0){
       turns = [
-        <Turn key={0} darts={this.props.turns} throwDart={this.props.throwDart}/>
+        <Turn key={0} darts={this.state.turns} throwDart={this.props.throwDart}/>
       ];
     }
     else{
-      turns = this.props.turns.map((turn, idx) => {
+      turns = this.state.turns.map((turn, idx) => {
         return <Turn key={idx} darts={turn} throwDart={this.props.throwDart}/>;
       });
     }

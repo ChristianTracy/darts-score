@@ -43,14 +43,28 @@ class Board extends React.Component {
 
 
   throwDart = (score) => {
-    let currentPlayer = this.state.players[this.state.currentPlayer];
+    let currentPlayer = { ...this.state.players[this.state.currentPlayer] };
     let currentTurn = currentPlayer.turns[currentPlayer.turns.length - 1];
     console.log(currentTurn);
 
     if(currentTurn === undefined){
       currentPlayer.turns.push([score])
+      this.setState({
+        players: [
+          ...this.state.players.slice(0, this.state.currentPlayer),
+          currentPlayer,
+          ...this.state.players.slice(this.state.currentPlayer +  1)
+        ]
+      })
     }else if(currentTurn.length < 3){
-      currentTurn.push(score)
+      currentPlayer.turns.push([score])
+      this.setState({
+        players: [
+          ...this.state.players.slice(0, this.state.currentPlayer),
+          currentPlayer,
+          ...this.state.players.slice(this.state.currentPlayer +  1)
+        ]
+      })
     }
 
   }
