@@ -14,7 +14,7 @@ class Player extends Component {
   }
 
   componentWillReceiveProps(newProps){
-    if (newProps != this.props) {
+    if (newProps !== this.props) {
       this.setState({
         turns:newProps.turns
       })

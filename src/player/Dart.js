@@ -14,7 +14,7 @@ class Dart extends Component {
 
   throwDart(event){
     event.preventDefault();
-    this.props.throwDart(this.state.score);
+    this.props.throwDart(parseInt(this.state.score, 10));
   }
 
   changeHandler(event){
@@ -25,11 +25,11 @@ class Dart extends Component {
 
   render(){
     let element = <span>{this.props.score}</span>;
-    
+
     if(this.props.editable){
       element = (<form onSubmit={this.throwDart}>
         <input type='number' defaultValue={this.props.score} onChange={this.changeHandler} />
-      </form>); 
+      </form>);
     }
     return <div>
         {element}
