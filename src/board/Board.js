@@ -13,7 +13,8 @@ class Board extends React.Component {
     super(props);
     this.state = {
       currentPlayer: 0,
-      round: 0
+      round: 0,
+      winner: null
     };
 
   }
@@ -107,6 +108,17 @@ class Board extends React.Component {
     return 0;
   }
 
+  validateWin = () => {
+    let currentPlayer = this.state.currentPlayer;
+    let currentPlayerScore = this.state.scores[currentPlayer];
+
+    if(currentPlayerScore === LIMIT_SCORE){
+      this.setState({
+        winner: currentPlayer
+      });
+    }
+  }
+
   throwDart = score => {
     let currentPlayer = { ...this.state.players[this.state.currentPlayer] };
     let currentTurn = currentPlayer.turns[this.state.round];
@@ -121,12 +133,13 @@ class Board extends React.Component {
     }
 
     this.updatePlayer(currentPlayer);
-//    this.win()
+    this.validateWin();
     this.validateTurn();
   }
 
   render(){
     let players;
+    let winner
     if (this.props.players) {
       players = this.state.players.map((player, idx) => {
         return <Player key={idx}
@@ -136,6 +149,11 @@ class Board extends React.Component {
           throwDart={this.throwDart} />
       })
     }
+    
+    if(this.state.winner !== null){
+      winner = <div>Winner: {this.state.players[this.state.winner].name}</div>
+    }
+
     return <div className="board">
       <div className="body">
         {players}
@@ -144,6 +162,7 @@ class Board extends React.Component {
         <Score scores={this.state.scores}/>
       </div>
       <button onClick={this.saveData}>Save Data</button>
+      {winner}
     </div>
   }
 }
