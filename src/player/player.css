@@ -2,7 +2,29 @@
   font-size: 20px;
 }
 
+.scores-table{
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
 .player input{
   margin-top: 10px;
   width: 45px;
+}
+
+.turn{
+  display: flex;
+  width: 180px;
+  justify-content: flex-start;
+}
+
+.dart{
+  width: 60px;
+  height: 60px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  display: flex;
+  flex: 0 1 60px;
+  justify-content: center;
+  align-items: center;
 }

@@ -26,10 +26,10 @@ class Dart extends Component {
 
     if(this.props.editable){
       element = (<form onSubmit={this.throwDart}>
-        <input type='number' defaultValue={this.props.score} onChange={this.changeHandler} />
+        <input type='number' autoFocus defaultValue={this.props.value} onChange={this.changeHandler} />
       </form>);
     }
-    return <div>
+    return <div className="dart">
         {element}
     </div>
   }

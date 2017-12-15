@@ -34,7 +34,7 @@ class Turn extends Component {
         darts.push(<Dart key={this.props.darts.length} score={0} editable={true} throwDart={this.props.throwDart} />);
       }
     }
-    return <div>{darts}</div>
+    return <div className="turn">{darts}</div>
   }
 }
 
