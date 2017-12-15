@@ -16,12 +16,20 @@ class Player extends Component {
     let turns;
     if(this.props.turns.length === 0){
       turns = [
-        <Turn key={0} darts={this.props.turns} throwDart={this.props.throwDart} isPlaying={this.props.isPlaying}/>
+        <Turn key={0}
+          darts={this.props.turns}
+          throwDart={this.props.throwDart}
+          isPlaying={this.props.isPlaying}
+          winner={this.props.winner}/>
       ];
     }
     else{
       turns = this.props.turns.map((turn, idx) => {
-        return <Turn key={idx} darts={turn} throwDart={this.props.throwDart} isPlaying={this.props.isPlaying}/>;
+        return <Turn key={idx}
+        darts={turn}
+        throwDart={this.props.throwDart}
+        isPlaying={this.props.isPlaying}
+        winner={this.props.winner}/>;
       });
     }
 
