@@ -15,7 +15,6 @@ class Board extends React.Component {
       round: 0
     };
 
-    this.isPlaying = this.isPlaying.bind(this);
   }
 
   saveData = () => {
@@ -31,42 +30,66 @@ class Board extends React.Component {
         };
       });
 
+      let scores = Array(players.length).fill(0);
+
       this.setState({
-        players
+        players,
+        scores
       });
     }
   }
 
-  isPlaying(idx){
+  isPlaying = idx => {
     return idx === this.state.currentPlayer;
   }
 
+  checkTurn = () => {
 
-  throwDart = (score) => {
+  }
+
+  updatePlayer = (player) => {
+    this.setState({
+      players: [
+        ...this.state.players.slice(0, this.state.currentPlayer),
+        player,
+        ...this.state.players.slice(this.state.currentPlayer +  1)
+      ]
+    })
+  }
+
+  updateScore = (score) => {
+    let newTotal = this.state.scores[this.state.currentPlayer] + score;
+    this.setState({
+      ...this.state.scores.slice(0, this.state.currentPlayer),
+      newTotal,
+      ...this.state.scores.slice(this.state.currentPlayer + 1)
+    })
+  }
+
+  validateScore = score => {
+    let greaterThanLimit = (this.state.scores[this.state.currentPlayer] + score) > 301;
+    if (!greaterThanLimit){
+      this.updateScore(score);
+      return score;
+    }
+    return 0;
+  }
+
+  throwDart = score => {
     let currentPlayer = { ...this.state.players[this.state.currentPlayer] };
-    let currentTurn = currentPlayer.turns[currentPlayer.turns.length - 1];
-    console.log(currentTurn);
+    let currentTurn = currentPlayer.turns[this.state.round];
+
+    score = this.validateScore(score);
 
     if(currentTurn === undefined){
-      currentPlayer.turns.push([score])
-      this.setState({
-        players: [
-          ...this.state.players.slice(0, this.state.currentPlayer),
-          currentPlayer,
-          ...this.state.players.slice(this.state.currentPlayer +  1)
-        ]
-      })
+      currentPlayer.turns.push([score]);
     }else if(currentTurn.length < 3){
-      currentPlayer.turns.push([score])
-      this.setState({
-        players: [
-          ...this.state.players.slice(0, this.state.currentPlayer),
-          currentPlayer,
-          ...this.state.players.slice(this.state.currentPlayer +  1)
-        ]
-      })
+      currentTurn.push(score);
     }
 
+    this.updatePlayer(currentPlayer);
+//    this.win()
+  //  this.checkTurn();
   }
 
   render(){
@@ -85,7 +108,7 @@ class Board extends React.Component {
         {players}
       </div>
       <div className="totals">
-        <Score scores={[1,2]}/>
+        <Score scores={this.state.scores}/>
       </div>
       <button onClick={this.saveData}>Save Data</button>
     </div>
