@@ -23,7 +23,7 @@ class Board extends React.Component {
 
   componentWillMount(){
     if(this.props.players){
-      let players = this.props.players.map((playerName) => {
+      let players = this.props.players.map((playerName, idx) => {
         return {
           name: playerName,
           turns: []
@@ -43,8 +43,37 @@ class Board extends React.Component {
     return idx === this.state.currentPlayer;
   }
 
-  checkTurn = () => {
+  updateTurn = () => {
+    //update current player
+      let currentPlayer = this.state.currentPlayer + 1;
+      let round = this.state.round;
+      if(currentPlayer > this.state.players.length - 1){
+        currentPlayer = 0;
+        round =  + 1;
+      }
 
+      let player = this.state.players[currentPlayer];
+      player.turns = [...player.turns, []];
+
+      this.setState({
+        players: [
+          ...this.state.players.slice(0, currentPlayer),
+          player,
+          ...this.state.players.slice(currentPlayer + 1)
+        ],
+        currentPlayer,
+        round
+      })    
+  }
+
+  validateTurn = () => {
+    //check if the turn shoul be change to another player
+    let currentPlayer = this.state.players[this.state.currentPlayer];
+    let dartsThrown = currentPlayer.turns[this.state.round].length;
+
+    if(dartsThrown === 3){
+      this.updateTurn();
+    }
   }
 
   updatePlayer = (player) => {
@@ -58,7 +87,7 @@ class Board extends React.Component {
   }
 
   updateScore = (score) => {
-    let newTotal = this.state.scores[this.state.currentPlayer] + parseInt(score);
+    let newTotal = this.state.scores[this.state.currentPlayer] + score;
     this.setState({
       scores:[
         ...this.state.scores.slice(0, this.state.currentPlayer),
@@ -91,7 +120,7 @@ class Board extends React.Component {
 
     this.updatePlayer(currentPlayer);
 //    this.win()
-  //  this.checkTurn();
+    this.validateTurn();
   }
 
   render(){

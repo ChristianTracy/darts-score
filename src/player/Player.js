@@ -8,7 +8,7 @@ class Player extends Component {
     super(props);
     this.state = {
       won: false,
-      playing: false,
+      playing: this.props.isPlaying,
       turns: this.props.turns
     }
   }
@@ -23,7 +23,7 @@ class Player extends Component {
 
   render(){
     let turns;
-    if(this.state.turns.length === 0){
+    if(this.state.turns.length === 0 && this.state.playing){
       turns = [
         <Turn key={0} darts={this.state.turns} throwDart={this.props.throwDart}/>
       ];
