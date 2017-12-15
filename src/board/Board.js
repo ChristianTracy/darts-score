@@ -32,7 +32,7 @@ class Board extends React.Component {
         };
       });
 
-      let scores = Array(players.length).fill(0);
+      let scores = Array(players.length).fill(null);
 
       this.setState({
         players,
@@ -65,7 +65,7 @@ class Board extends React.Component {
         ],
         currentPlayer,
         round
-      })    
+      })
   }
 
   validateTurn = () => {
@@ -142,20 +142,22 @@ class Board extends React.Component {
 
   render(){
     let players;
-    let winner
+    let winner;
+    let button;
     if (this.props.players) {
       players = this.state.players.map((player, idx) => {
         return <Player key={idx}
           name={player.name}
           turns={player.turns}
           isPlaying={this.isPlaying(idx)}
-          throwDart={this.throwDart} 
+          throwDart={this.throwDart}
           winner={this.state.winner} />
       })
     }
-    
+
     if(this.state.winner !== null){
       winner = <div>Winner: {this.state.players[this.state.winner].name}</div>
+      button = <button onClick={this.saveData}>Save Data</button>
     }
 
     return <div className="board">
@@ -165,8 +167,8 @@ class Board extends React.Component {
       <div className="totals">
         <Score scores={this.state.scores}/>
       </div>
-      <button onClick={this.saveData}>Save Data</button>
       {winner}
+      {button}
     </div>
   }
 }

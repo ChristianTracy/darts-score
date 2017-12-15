@@ -35,7 +35,7 @@ class Player extends Component {
 
     return <div className="player">
       <header>{this.props.name}</header>
-      <div>{turns}</div>
+      <div className="scores-table">{turns}</div>
     </div>
 
   }
