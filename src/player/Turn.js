@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Dart from './Dart';
+import { DARTS_LIMIT } from '../utils/constants';
 
 class Turn extends Component {
 
@@ -29,7 +30,7 @@ class Turn extends Component {
       darts = this.props.darts.map((dart, idx) => {
         return <Dart key={idx} score={dart} editable={false} />
       });
-      if(this.props.darts.length < 3 && this.props.isPlaying){
+      if(this.props.darts.length < DARTS_LIMIT && this.props.isPlaying){
         darts.push(<Dart key={this.props.darts.length} score={0} editable={true} throwDart={this.props.throwDart} />);
       }
     }

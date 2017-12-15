@@ -4,7 +4,7 @@ import Player from '../player/Player';
 import Score from './Score';
 import firebaseConnection from '../utils/firebaseConnection';
 import './board.css';
-import { LIMIT_SCORE } from '../utils/constants';
+import { LIMIT_SCORE, DARTS_LIMIT } from '../utils/constants';
 
 
 class Board extends React.Component {
@@ -72,7 +72,7 @@ class Board extends React.Component {
     let currentPlayer = this.state.players[this.state.currentPlayer];
     let dartsThrown = currentPlayer.turns[this.state.round].length;
 
-    if(dartsThrown === 3){
+    if(dartsThrown === DARTS_LIMIT){
       this.updateTurn();
     }
   }
@@ -116,7 +116,7 @@ class Board extends React.Component {
     if(currentTurn === undefined){
       currentPlayer.turns.push([score]);
     }
-    else if(currentTurn.length < 3){
+    else if(currentTurn.length < DARTS_LIMIT){
       currentTurn.push(score);
     }
 
