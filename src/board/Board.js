@@ -78,7 +78,7 @@ class Board extends React.Component {
     }
   }
 
-  updatePlayer = (player) => {
+  updatePlayer = player => {
     this.setState({
       players: [
         ...this.state.players.slice(0, this.state.currentPlayer),
@@ -88,7 +88,7 @@ class Board extends React.Component {
     })
   }
 
-  updateScore = (score) => {
+  updateScore = score => {
     let newTotal = this.state.scores[this.state.currentPlayer] + score;
     this.setState({
       scores:[
@@ -108,11 +108,10 @@ class Board extends React.Component {
     return 0;
   }
 
-  validateWin = () => {
+  validateWin = score => {
     let currentPlayer = this.state.currentPlayer;
-    let currentPlayerScore = this.state.scores[currentPlayer];
 
-    if(currentPlayerScore === LIMIT_SCORE){
+    if(score === LIMIT_SCORE){
       this.setState({
         winner: currentPlayer
       });
@@ -120,8 +119,10 @@ class Board extends React.Component {
   }
 
   throwDart = score => {
+    let currentPlayerScore = this.state.scores[this.state.currentPlayer];
     let currentPlayer = { ...this.state.players[this.state.currentPlayer] };
     let currentTurn = currentPlayer.turns[this.state.round];
+    let totalNewScore;
 
     score = this.validateScore(score);
 
@@ -132,8 +133,10 @@ class Board extends React.Component {
       currentTurn.push(score);
     }
 
+    totalNewScore = currentPlayerScore + score;
+
     this.updatePlayer(currentPlayer);
-    this.validateWin();
+    this.validateWin(totalNewScore);
     this.validateTurn();
   }
 
@@ -146,7 +149,8 @@ class Board extends React.Component {
           name={player.name}
           turns={player.turns}
           isPlaying={this.isPlaying(idx)}
-          throwDart={this.throwDart} />
+          throwDart={this.throwDart} 
+          winner={this.state.winner} />
       })
     }
     

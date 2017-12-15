@@ -7,17 +7,15 @@ class Dart extends Component {
     this.state = {
       score: 0
     }
-    this.throwDart = this.throwDart.bind(this);
-    this.changeHandler = this.changeHandler.bind(this);
   }
 
 
-  throwDart(event){
+  throwDart = event => {
     event.preventDefault();
     this.props.throwDart(parseInt(this.state.score, 10));
   }
 
-  changeHandler(event){
+  changeHandler = event => {
     this.setState({
       score: event.target.value
     });
