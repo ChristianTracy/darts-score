@@ -58,11 +58,13 @@ class Board extends React.Component {
   }
 
   updateScore = (score) => {
-    let newTotal = this.state.scores[this.state.currentPlayer] + score;
+    let newTotal = this.state.scores[this.state.currentPlayer] + parseInt(score);
     this.setState({
-      ...this.state.scores.slice(0, this.state.currentPlayer),
-      newTotal,
-      ...this.state.scores.slice(this.state.currentPlayer + 1)
+      scores:[
+        ...this.state.scores.slice(0, this.state.currentPlayer),
+        newTotal,
+        ...this.state.scores.slice(this.state.currentPlayer + 1)
+      ]
     })
   }
 

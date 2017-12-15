@@ -11,7 +11,6 @@ class Turn extends Component {
   }
 
   componentWillReceiveProps(newProps){
-    console.log(newProps);
     if(newProps.darts.length !== this.state.darts.length){
       this.setState({
         darts: newProps.darts
