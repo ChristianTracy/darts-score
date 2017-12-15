@@ -21,7 +21,7 @@ class Turn extends Component {
   render(){
 
     let darts;
-    if(this.props.darts.length === 0 && this.props.isPlaying){
+    if(this.props.darts.length === 0 && this.props.isPlaying && (this.props.winner === null)){
       darts = [
         <Dart key={0} score={0} editable={true} throwDart={this.props.throwDart} />
       ];
@@ -30,7 +30,7 @@ class Turn extends Component {
       darts = this.props.darts.map((dart, idx) => {
         return <Dart key={idx} score={dart} editable={false} />
       });
-      if(this.props.darts.length < DARTS_LIMIT && this.props.isPlaying){
+      if(this.props.darts.length < DARTS_LIMIT && this.props.isPlaying && (this.props.winner === null)){
         darts.push(<Dart key={this.props.darts.length} score={0} editable={true} throwDart={this.props.throwDart} />);
       }
     }
